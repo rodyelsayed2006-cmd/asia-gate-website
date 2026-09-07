@@ -1,952 +1,1251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ASIA GATE · Language Center</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASIA GATE · Language Center</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- React + ReactDOM + Babel -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js">
-    </script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js">
-    </script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js">
-    </script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-    <!-- Tailwind via CDN -->
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+body{
+    font-family:'Montserrat',sans-serif;
+    background:#F7F3F1;
+    color:#1E2A44;
+}
 
-    <style>
-        /* Custom overrides & base styling */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+html{scroll-behavior:smooth}
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #F7F3F1;
-            color: #1E2A44;
-        }
+a{text-decoration:none;color:inherit}
 
-        .font-playfair {
-            font-family: 'Playfair Display', serif;
-        }
+button,input{font-family:inherit}
 
-        .font-montserrat {
-            font-family: 'Montserrat', sans-serif;
-        }
+.font-playfair{font-family:'Playfair Display',serif}
 
-        /* Cherry blossom petals floating */
-        .petal {
-            position: absolute;
-            font-size: 1.4rem;
-            opacity: 0.3;
-            pointer-events: none;
-            user-select: none;
-            color: #B07C8C;
-            animation: floatPetals linear infinite;
-        }
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
 
-        @keyframes floatPetals {
-            0% {
-                transform: translateY(0px) rotate(0deg) scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-120px) rotate(180deg) scale(0.8);
-                opacity: 0;
-            }
-        }
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:100;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid #E8D9D6;
+}
 
-        /* subtle wave decor */
-        .wave-divider {
-            background: repeating-linear-gradient(90deg,
-                    transparent,
-                    transparent 8px,
-                    rgba(30, 42, 68, 0.06) 8px,
-                    rgba(30, 42, 68, 0.06) 10px);
-            height: 2px;
-            width: 100%;
-        }
+.navbar{
+    min-height:76px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+}
 
-        /* nav link hover */
-        .nav-link {
-            position: relative;
-            font-weight: 400;
-            letter-spacing: 0.02em;
-            transition: color 0.2s ease;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1.5px;
-            background-color: #B07C8C;
-            transition: width 0.25s ease;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        .nav-link:hover {
-            color: #B07C8C;
-        }
+.logo{
+    font-family:'Playfair Display',serif;
+    font-size:28px;
+    font-weight:700;
+    white-space:nowrap;
+}
 
-        /* category icon circle */
-        .cat-circle {
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-        .cat-circle:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 28px rgba(30, 42, 68, 0.08);
-        }
+.logo span{color:#B07C8C}
 
-        /* book card */
-        .book-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: #ffffff;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-        .book-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(30, 42, 68, 0.08);
-        }
+.logo small{
+    font-family:'Montserrat',sans-serif;
+    font-size:9px;
+    letter-spacing:2px;
+    font-weight:400;
+    border-left:1px solid #E8D9D6;
+    padding-left:10px;
+    margin-left:8px;
+    color:#A67C8A;
+}
 
-        /* button base */
-        .btn-rose {
-            background-color: #B07C8C;
-            color: #F7F3F1;
-            padding: 0.6rem 1.8rem;
-            border-radius: 9999px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: background 0.25s ease, transform 0.2s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        .btn-rose:hover {
-            background-color: #9a6a7a;
-            transform: scale(1.02);
-        }
+nav{
+    display:flex;
+    gap:25px;
+    font-size:13px;
+}
 
-        .btn-outline-rose {
-            background: transparent;
-            color: #B07C8C;
-            border: 1.5px solid #B07C8C;
-            padding: 0.5rem 1.6rem;
-            border-radius: 9999px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: background 0.25s ease, color 0.25s ease;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        .btn-outline-rose:hover {
-            background: #B07C8C;
-            color: #F7F3F1;
-        }
+nav a{
+    position:relative;
+    transition:.2s;
+}
 
-        /* Hero overlay gradient */
-        .hero-overlay {
-            background: linear-gradient(135deg, rgba(247, 243, 241, 0.70) 0%, rgba(247, 243, 241, 0.25) 70%, rgba(247, 243, 241, 0.05) 100%);
-        }
+nav a:hover{color:#B07C8C}
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            background: #E8D9D6;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #B07C8C;
-            border-radius: 12px;
-        }
+nav a:after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:2px;
+    background:#B07C8C;
+    transition:.25s;
+}
 
-        /* responsive tweaks */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.4rem !important;
-            }
-            .hero-sub {
-                font-size: 0.95rem !important;
-            }
-        }
-    </style>
+nav a:hover:after{width:100%}
+
+.icons{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.icon-btn{
+    border:0;
+    background:none;
+    color:#1E2A44;
+    cursor:pointer;
+    font-size:16px;
+    position:relative;
+}
+
+.icon-btn:hover{color:#B07C8C}
+
+.cart-count{
+    position:absolute;
+    top:-9px;
+    right:-9px;
+    width:17px;
+    height:17px;
+    border-radius:50%;
+    background:#B07C8C;
+    color:white;
+    font-size:9px;
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+.menu-btn{display:none}
+
+.hero{
+    padding-top:76px;
+    min-height:600px;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 80% 25%,rgba(176,124,140,.14),transparent 25%),
+        linear-gradient(135deg,#F7F3F1,#E8D9D6);
+}
+
+.hero:before{
+    content:'🌸';
+    position:absolute;
+    right:8%;
+    top:18%;
+    font-size:90px;
+    opacity:.12;
+}
+
+.hero:after{
+    content:'🏯';
+    position:absolute;
+    right:13%;
+    bottom:12%;
+    font-size:130px;
+    opacity:.08;
+}
+
+.hero-content{
+    max-width:650px;
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-block;
+    background:rgba(176,124,140,.12);
+    color:#B07C8C;
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:11px;
+    letter-spacing:1.5px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-family:'Playfair Display',serif;
+    font-size:68px;
+    line-height:1.08;
+}
+
+.hero h1 span{color:#B07C8C}
+
+.hero p{
+    margin-top:20px;
+    max-width:540px;
+    line-height:1.8;
+    color:#4A3A4A;
+    font-size:16px;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:0;
+    border-radius:30px;
+    padding:12px 25px;
+    cursor:pointer;
+    background:#B07C8C;
+    color:white;
+    font-size:13px;
+    font-weight:500;
+    transition:.25s;
+}
+
+.btn:hover{
+    background:#9A6A7A;
+    transform:translateY(-2px);
+}
+
+.hero .btn{margin-top:28px}
+
+section{padding:55px 0}
+
+.divider{
+    height:2px;
+    background:repeating-linear-gradient(
+        90deg,
+        transparent 0 8px,
+        rgba(30,42,68,.07) 8px 10px
+    );
+    margin-bottom:40px;
+}
+
+.categories{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:20px;
+}
+
+.category{
+    background:rgba(255,255,255,.65);
+    padding:18px 8px;
+    border-radius:20px;
+    text-align:center;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.category:hover{
+    transform:translateY(-5px);
+    background:white;
+    box-shadow:0 15px 35px rgba(30,42,68,.08);
+}
+
+.category-icon{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+    margin:auto;
+}
+
+.category strong{
+    display:block;
+    margin-top:12px;
+    font-size:13px;
+}
+
+.category small{
+    color:#A67C8A;
+    font-size:10px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-bottom:25px;
+}
+
+.section-label{
+    color:#A67C8A;
+    letter-spacing:3px;
+    font-size:10px;
+}
+
+.section-title{
+    font-family:'Playfair Display',serif;
+    font-size:38px;
+    margin-top:5px;
+}
+
+.view-all{
+    color:#B07C8C;
+    font-size:13px;
+}
+
+.books{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:17px;
+}
+
+.book{
+    background:white;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 3px 15px rgba(30,42,68,.04);
+    transition:.3s;
+}
+
+.book:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 35px rgba(30,42,68,.1);
+}
+
+.cover{
+    aspect-ratio:3/4;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:65px;
+    position:relative;
+}
+
+.level{
+    position:absolute;
+    top:8px;
+    right:8px;
+    background:rgba(255,255,255,.8);
+    padding:4px 7px;
+    border-radius:15px;
+    font-size:9px;
+    color:#A67C8A;
+}
+
+.book-info{padding:13px}
+
+.book h3{
+    font-size:13px;
+    line-height:1.35;
+}
+
+.book p{
+    color:#A67C8A;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.book-bottom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:12px;
+}
+
+.price{
+    font-weight:600;
+    font-size:12px;
+}
+
+.add{
+    border:0;
+    background:#B07C8C;
+    color:white;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:10px;
+    cursor:pointer;
+}
+
+.culture{
+    background:#F7F3F1;
+    border:1px solid #E8D9D6;
+    border-radius:30px;
+    padding:55px;
+    display:flex;
+    align-items:center;
+    gap:60px;
+    overflow:hidden;
+}
+
+.culture-text{flex:1}
+
+.culture h2{
+    font-family:'Playfair Display',serif;
+    font-size:48px;
+    margin-top:5px;
+}
+
+.culture h2 span{color:#B07C8C}
+
+.culture p{
+    margin-top:12px;
+    color:#4A3A4A;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+}
+
+.tag{
+    background:white;
+    padding:9px 15px;
+    border-radius:25px;
+    font-size:11px;
+}
+
+.culture-grid{
+    flex:1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.culture-box{
+    aspect-ratio:1;
+    border-radius:18px;
+    background:#E8D9D6;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+}
+
+.culture-box span{
+    font-size:10px;
+    color:#A67C8A;
+    margin-top:8px;
+}
+
+.benefits{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px;
+    text-align:center;
+}
+
+.benefit-icon{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    background:#E8D9D6;
+    color:#B07C8C;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:19px;
+}
+
+.benefit h4{
+    margin-top:12px;
+    font-size:13px;
+}
+
+.benefit p{
+    color:#A67C8A;
+    font-size:10px;
+    line-height:1.6;
+    margin-top:5px;
+}
+
+footer{
+    background:#1E2A44;
+    color:white;
+    padding:55px 0 25px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 2fr;
+    gap:50px;
+}
+
+.footer-logo{
+    font-family:'Playfair Display',serif;
+    font-size:26px;
+    font-weight:700;
+}
+
+.footer-logo span{color:#B07C8C}
+
+footer p{
+    color:rgba(255,255,255,.55);
+    font-size:12px;
+    margin-top:10px;
+    line-height:1.7;
+}
+
+footer h4{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin-bottom:15px;
+}
+
+.footer-links{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    font-size:12px;
+}
+
+.footer-links a:hover{color:#B07C8C}
+
+.socials{
+    display:flex;
+    gap:15px;
+    margin-top:18px;
+}
+
+.socials a{color:rgba(255,255,255,.55)}
+.socials a:hover{color:#B07C8C}
+
+.newsletter{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.newsletter input{
+    flex:1;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.08);
+    border-radius:30px;
+    padding:11px 17px;
+    color:white;
+    outline:none;
+}
+
+.newsletter button{
+    border:0;
+    background:#B07C8C;
+    color:white;
+    border-radius:30px;
+    padding:0 20px;
+    cursor:pointer;
+}
+
+.copyright{
+    border-top:1px solid rgba(255,255,255,.1);
+    margin-top:40px;
+    padding-top:20px;
+    text-align:center;
+    color:rgba(255,255,255,.35);
+    font-size:10px;
+}
+
+.cart{
+    position:fixed;
+    inset:0;
+    z-index:200;
+    display:none;
+}
+
+.cart.active{display:block}
+
+.cart-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.25);
+    backdrop-filter:blur(3px);
+}
+
+.cart-panel{
+    position:absolute;
+    right:0;
+    top:0;
+    bottom:0;
+    width:min(420px,100%);
+    background:white;
+    padding:25px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:-10px 0 30px rgba(0,0,0,.12);
+}
+
+.cart-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:18px;
+    border-bottom:1px solid #E8D9D6;
+}
+
+.cart-head h2{
+    font-family:'Playfair Display',serif;
+}
+
+.close{
+    border:0;
+    background:none;
+    font-size:20px;
+    color:#A67C8A;
+    cursor:pointer;
+}
+
+.cart-items{
+    flex:1;
+    overflow:auto;
+    padding:20px 0;
+}
+
+.cart-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:#F7F3F1;
+    padding:12px;
+    border-radius:12px;
+    margin-bottom:10px;
+}
+
+.cart-item .emoji{font-size:30px}
+
+.cart-item-info{flex:1}
+
+.cart-item-info strong{
+    display:block;
+    font-size:12px;
+}
+
+.cart-item-info small{
+    color:#A67C8A;
+    font-size:9px;
+}
+
+.remove{
+    border:0;
+    background:none;
+    color:#B07C8C;
+    cursor:pointer;
+}
+
+.cart-total{
+    border-top:1px solid #E8D9D6;
+    padding-top:20px;
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+    font-size:14px;
+}
+
+.checkout{
+    width:100%;
+    justify-content:center;
+}
+
+.empty{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:#A67C8A;
+    text-align:center;
+}
+
+.empty div{font-size:50px;margin-bottom:15px}
+
+@media(max-width:1000px){
+    nav{display:none}
+    .menu-btn{display:block}
+    .books{grid-template-columns:repeat(3,1fr)}
+    .categories{grid-template-columns:repeat(3,1fr)}
+    .hero h1{font-size:52px}
+}
+
+@media(max-width:650px){
+    .logo small{display:none}
+    .navbar{min-height:65px}
+    .hero{padding-top:65px;min-height:560px}
+    .hero h1{font-size:42px}
+    .hero p{font-size:13px}
+    section{padding:35px 0}
+    .categories{grid-template-columns:repeat(2,1fr)}
+    .books{grid-template-columns:repeat(2,1fr)}
+    .section-head{align-items:start;flex-direction:column;gap:10px}
+    .section-title{font-size:29px}
+    .culture{
+        padding:30px 20px;
+        flex-direction:column;
+        gap:30px;
+    }
+    .culture h2{font-size:38px}
+    .benefits{grid-template-columns:1fr 1fr;gap:25px}
+    .footer-grid{grid-template-columns:1fr;gap:30px}
+    .newsletter{flex-direction:column}
+    .newsletter button{padding:11px}
+}
+</style>
 </head>
+
 <body>
 
-    <div id="root"></div>
+<header>
+<div class="container navbar">
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+<div class="logo">
+ASIA <span>GATE</span>
+<small>LANGUAGE CENTER</small>
+</div>
 
-        // ─── DATA ────────────────────────────────────────────────
-        const BOOKS = [{
-            id: 1,
-            title: 'Minna no Nihongo',
-            subtitle: 'Japanese – Beginner',
-            price: 'EGP 310',
-            cover: '📘',
-            bg: '#E8D9D6',
-            accent: '#B07C8C'
-        }, {
-            id: 2,
-            title: 'Korean Grammar in Use',
-            subtitle: 'Korean – Beginner',
-            price: 'EGP 300',
-            cover: '📗',
-            bg: '#D9C8C0',
-            accent: '#A67C8A'
-        }, {
-            id: 3,
-            title: 'HSK Standard Course 1',
-            subtitle: 'Chinese – Beginner',
-            price: 'EGP 300',
-            cover: '📕',
-            bg: '#E0D0C8',
-            accent: '#8A6A7A'
-        }, {
-            id: 4,
-            title: 'K-Drama Korean Reader',
-            subtitle: 'Intermediate',
-            price: 'EGP 280',
-            cover: '📙',
-            bg: '#DCCCC4',
-            accent: '#B07C8C'
-        }, {
-            id: 5,
-            title: 'Japanese Vocabulary Book',
-            subtitle: 'JLPT N5-N3',
-            price: 'EGP 250',
-            cover: '📓',
-            bg: '#E8DDD8',
-            accent: '#A67C8A'
-        }, {
-            id: 6,
-            title: 'Anime Guide Book',
-            subtitle: 'Culture & Language',
-            price: 'EGP 290',
-            cover: '📖',
-            bg: '#D6C8C0',
-            accent: '#8A6A7A'
-        }];
+<nav>
+<a href="#home">Home</a>
+<a href="#books">Books</a>
+<a href="#languages">Languages</a>
+<a href="#culture">Anime & Culture</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
 
-        const CATEGORIES = [{
-            label: 'Japanese',
-            sub: '日本語の本',
-            icon: '🇯🇵',
-            bg: '#E8D9D6'
-        }, {
-            label: 'Korean',
-            sub: '한국어의 책',
-            icon: '🇰🇷',
-            bg: '#E0D0C8'
-        }, {
-            label: 'Chinese',
-            sub: '中文書籍',
-            icon: '🇨🇳',
-            bg: '#DCCCC4'
-        }, {
-            label: 'Other Languages',
-            sub: 'Italian • English • More',
-            icon: '🌏',
-            bg: '#E8DDD8'
-        }, {
-            label: 'Anime & K-Drama',
-            sub: 'Books • Merch • Culture',
-            icon: '🎌',
-            bg: '#D6C8C0'
-        }];
+<div class="icons">
+<button class="icon-btn">
+<i class="fa-solid fa-magnifying-glass"></i>
+</button>
 
-        const BENEFITS = [{
-            icon: 'fa-solid fa-truck-fast',
-            title: 'Worldwide Shipping',
-            desc: 'We deliver to your doorstep wherever you are.'
-        }, {
-            icon: 'fa-solid fa-lock',
-            title: 'Secure Payment',
-            desc: 'Your information is always safe with us.'
-        }, {
-            icon: 'fa-solid fa-headset',
-            title: 'Language Support',
-            desc: 'Need help? We’re here for you.'
-        }, {
-            icon: 'fa-solid fa-users',
-            title: 'More Than Just Books',
-            desc: 'Join our community of learners and fans!'
-        }];
+<button class="icon-btn">
+<i class="fa-regular fa-user"></i>
+</button>
 
-        // ─── COMPONENTS ──────────────────────────────────────────
+<button class="icon-btn" onclick="openCart()">
+<i class="fa-solid fa-bag-shopping"></i>
+<span class="cart-count" id="cartCount">0</span>
+</button>
 
-        // ── Petal decoration ──
-        const Petals = ({ count = 6 }) => {
-            const petals = ['🌸', '🌸', '🌸', '🌸', '🌸', '🌸'];
-            return ( <
-                >
-                {
-                    petals.slice(0, count).map((p, i) => ( <
-                        span key = { i }
-                        className = "petal"
-                        style = {{
-                            left: `${5 + i * 18}%`,
-                            top: `${10 + (i % 3) * 25}%`,
-                            animationDuration: `${6 + i * 1.2}s`,
-                            animationDelay: `${i * 0.7}s`,
-                            fontSize: `${1 + (i % 3) * 0.3}rem`
-                        }} >
-                        { p } <
-                        /span>
-                    ))
-                } <
-                />
-            );
-        };
+<button class="icon-btn menu-btn" onclick="toggleMenu()">
+<i class="fa-solid fa-bars"></i>
+</button>
+</div>
 
-        // ── Header ──
-        const Header = ({ cartCount, setCartOpen }) => {
-            const [mobileOpen, setMobileOpen] = useState(false);
-            const navItems = ['Home', 'Books', 'Languages', 'Anime & Culture', 'About', 'Contact'];
+</div>
+</header>
 
-            return ( <
-                    header className = "fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-[#E8D9D6]/40" >
-                    <
-                    div className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
-                    <
-                    div className = "flex items-center justify-between h-16 lg:h-20 relative" >
+<div id="mobileMenu" style="display:none;position:fixed;top:65px;left:0;right:0;background:white;z-index:99;padding:20px;border-bottom:1px solid #E8D9D6">
+<div class="container" style="display:flex;flex-direction:column;gap:15px;font-size:13px">
+<a href="#home" onclick="toggleMenu()">Home</a>
+<a href="#books" onclick="toggleMenu()">Books</a>
+<a href="#languages" onclick="toggleMenu()">Languages</a>
+<a href="#culture" onclick="toggleMenu()">Anime & Culture</a>
+<a href="#about" onclick="toggleMenu()">About</a>
+<a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+</div>
 
-                    { /* Petals on edges */ } <
-                    div className = "absolute left-0 top-0 h-full w-20 pointer-events-none overflow-hidden" >
-                    <
-                    span className = "petal" style = { { left: '2px', top: '10%', animationDuration: '7s',
-                            animationDelay: '0.2s', fontSize: '1.2rem' } } > 🌸 < /span> <
-                    span className = "petal" style = { { left: '8px', top: '60%', animationDuration: '9s',
-                            animationDelay: '1s', fontSize: '0.9rem' } } > 🌸 < /span> <
-                    /div> <
-                    div className = "absolute right-0 top-0 h-full w-20 pointer-events-none overflow-hidden" >
-                    <
-                    span className = "petal" style = { { right: '2px', top: '20%', animationDuration: '8s',
-                            animationDelay: '0.6s', fontSize: '1.1rem' } } > 🌸 < /span> <
-                    span className = "petal" style = { { right: '6px', top: '70%', animationDuration: '10s',
-                            animationDelay: '1.4s', fontSize: '0.8rem' } } > 🌸 < /span> <
-                    /div>
+<main>
 
-                    { /* Logo */ } <
-                    div className = "flex items-center gap-1 z-10" >
-                    <
-                    span className = "font-playfair text-2xl lg:text-3xl font-bold tracking-wide text-[#1E2A44]" >
-                    ASIA < span className = "text-[#B07C8C]" > GATE < /span> <
-                    /span> <
-                    span className = "hidden sm:inline-block text-[10px] font-montserrat font-light tracking-[0.15em] text-[#A67C8A] ml-1.5 border-l border-[#E8D9D6] pl-2.5" >
-                    LANGUAGE CENTER <
-                    /span> <
-                    /div>
+<section class="hero" id="home">
+<div class="container">
+<div class="hero-content">
 
-                    { /* Desktop Nav */ } <
-                    nav className = "hidden lg:flex items-center gap-7 font-montserrat text-sm font-medium text-[#1E2A44]" >
-                    {
-                        navItems.map((item) => ( <
-                            a key = { item }
-                            href = "#"
-                            className = "nav-link" >
-                            { item } { item === 'Languages' || item === 'Anime & Culture' ? < span className =
-                                "text-[10px] ml-0.5" > ▾ < /span> : null } <
-                            /a>
-                        ))
-                    } <
-                    /nav>
+<div class="badge">WELCOME TO ASIA GATE</div>
 
-                    { /* Right icons */ } <
-                    div className = "flex items-center gap-4 lg:gap-5 z-10" >
-                    <
-                    button className = "text-[#1E2A44] hover:text-[#B07C8C] transition text-base" >
-                    < i className = "fa-solid fa-magnifying-glass" > < /i> <
-                    /button> <
-                    button className = "text-[#1E2A44] hover:text-[#B07C8C] transition text-base" >
-                    < i className = "fa-regular fa-user" > < /i> <
-                    /button> <
-                    button onClick = {
-                        () => setCartOpen(true) }
-                    className = "text-[#1E2A44] hover:text-[#B07C8C] transition text-base relative" >
-                    < i className = "fa-solid fa-bag-shopping" > < /i> {
-                        cartCount > 0 && < span className = "absolute -top-1.5 -right-2.5 bg-[#B07C8C] text-white text-[9px] font-semibold rounded-full w-4 h-4 flex items-center justify-center" >
-                        { cartCount } <
-                        /span>} <
-                        /button> <
-                        button onClick = {
-                            () => setMobileOpen(!mobileOpen) }
-                        className = "lg:hidden text-[#1E2A44] text-xl" >
-                        <
-                        i className = { `fa-solid ${mobileOpen ? 'fa-xmark' : 'fa-bars'}` } >
-                        < /i> <
-                        /button> <
-                        /div> <
-                        /div>
+<h1>
+Your Next Chapter<br>
+<span>Starts Here</span>
+</h1>
 
-                        { /* Mobile Nav */ } {
-                            mobileOpen && ( <
-                                div className = "lg:hidden bg-white/98 backdrop-blur-md border-t border-[#E8D9D6]/40 py-4 px-4" >
-                                <
-                                div className = "flex flex-col gap-3 font-montserrat text-sm font-medium text-[#1E2A44]" > {
-                                    navItems.map((item) => ( <
-                                        a key = { item }
-                                        href = "#"
-                                        className = "py-1.5 hover:text-[#B07C8C] transition border-b border-[#E8D9D6]/30" >
-                                        { item } { item === 'Languages' || item === 'Anime & Culture' ? < span className =
-                                            "text-[10px] ml-1" > ▾ < /span> : null } <
-                                        /a>
-                                    ))
-                                } <
-                                /div> <
-                                /div>
-                            )
-                        } <
-                        /header>
-                    );
-                };
+<p>
+Books, resources and essentials to help you learn,
+enjoy, and explore Asian languages and culture.
+</p>
 
-                // ── Hero ──
-                const Hero = () => {
-                    return ( <
-                            section className = "relative pt-20 lg:pt-24 overflow-hidden" >
-                            { /* Dreamy background */ } <
-                            div className = "absolute inset-0 bg-gradient-to-br from-[#F7F3F1] via-[#E8D9D6]/30 to-[#E8D9D6]/10" >
-                            <
-                            /div>
+<button class="btn" onclick="document.getElementById('books').scrollIntoView()">
+Browse Books
+<i class="fa-solid fa-arrow-right"></i>
+</button>
 
-                            { /* Scenic elements */ } <
-                            div className = "absolute inset-0 pointer-events-none" >
-                            { /* Torii gate */ } <
-                            div className = "absolute left-[10%] bottom-[20%] text-[#1E2A44]/10 text-8xl lg:text-9xl font-serif tracking-widest transform -rotate-6" >
-                            ⓪ < /div> { /* placeholder stylized */ } <
-                            div className = "absolute right-[15%] bottom-[30%] text-[#B07C8C]/10 text-7xl lg:text-8xl" >
-                            🏯 < /div> <
-                            div className = "absolute left-[5%] top-[30%] text-[#B07C8C]/8 text-6xl lg:text-7xl" >
-                            🌸 < /div> <
-                            div className = "absolute right-[8%] top-[15%] text-[#A67C8A]/10 text-5xl lg:text-6xl" >
-                            🌙 < /div> <
-                            div className = "absolute left-[45%] bottom-[10%] text-[#1E2A44]/5 text-5xl lg:text-6xl" >
-                            🏔️ < /div> <
-                            div className = "absolute right-[30%] top-[40%] text-[#1E2A44]/5 text-4xl lg:text-5xl" >
-                            🐦 < /div> <
-                            div className = "absolute left-[25%] bottom-[40%] text-[#A67C8A]/6 text-4xl lg:text-5xl" >
-                            🌊 < /div> <
-                            /div>
+</div>
+</div>
+</section>
 
-                            { /* Content */ } <
-                            div className = "relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 min-h-[480px] lg:min-h-[560px] flex items-center" >
-                            <
-                            div className = "hero-overlay absolute inset-0 rounded-2xl" > < /div> <
-                            div className = "relative z-10 max-w-2xl" >
-                            <
-                            div className = "inline-block mb-4 px-4 py-1.5 bg-[#B07C8C]/10 rounded-full text-[#B07C8C] text-xs font-medium tracking-wider font-montserrat" >
-                            WELCOME TO ASIA GATE
-                            <
-                            /div> <
-                            h1 className = "hero-title font-playfair text-5xl lg:text-7xl font-bold text-[#1E2A44] leading-[1.1] tracking-tight" >
-                            Your Next Chapter < br / > < span className = "text-[#B07C8C]" > Starts Here < /span> <
-                            /h1> <
-                            p className = "hero-sub mt-5 text-[#4A3A4A] font-montserrat text-base lg:text-lg max-w-lg leading-relaxed" >
-                            Books, resources and essentials to help you learn, enjoy, and explore Asian
-                            languages and culture.
-                            <
-                            /p> <
-                            div className = "mt-7 flex flex-wrap items-center gap-4" >
-                            <
-                            button className = "btn-rose" >
-                            Browse Books < i className = "fa-solid fa-arrow-right ml-1 text-sm" > < /i> <
-                            /button> <
-                            span className = "text-xs text-[#A67C8A] font-montserrat tracking-wider" >
-                            Explore our collection
-                            <
-                            /span> <
-                            /div>
+<section id="languages">
+<div class="container">
 
-                            { /* Carousel indicators */ } <
-                            div className = "mt-10 flex gap-2.5" >
-                            <
-                            span className = "w-8 h-1.5 rounded-full bg-[#B07C8C]" > < /span> <
-                            span className = "w-4 h-1.5 rounded-full bg-[#E8D9D6]" > < /span> <
-                            span className = "w-4 h-1.5 rounded-full bg-[#E8D9D6]" > < /span> <
-                            /div> <
-                            /div> <
-                            /div> <
-                            /section>
-                        );
-                    };
+<div class="divider"></div>
 
-                    // ── Category Navigation ──
-                    const CategoryNav = () => {
-                        return ( <
-                                section className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12" >
-                                <
-                                div className = "wave-divider mb-8 lg:mb-10" > < /div> <
-                                div className = "grid grid-cols-3 sm:grid-cols-5 gap-4 md:gap-6" > {
-                                    CATEGORIES.map((cat) => ( <
-                                        div key = { cat.label }
-                                        className = "cat-circle flex flex-col items-center text-center cursor-pointer group p-3 rounded-2xl bg-white/60 backdrop-blur-sm transition hover:bg-white/90" >
-                                        <
-                                        div className = "w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-3xl md:text-4xl"
-                                        style = { { backgroundColor: cat.bg } } >
-                                        { cat.icon } <
-                                        /div> <
-                                        span className = "mt-2.5 text-[#1E2A44] font-montserrat font-medium text-xs md:text-sm tracking-wide" >
-                                        { cat.label } <
-                                        /span> <
-                                        span className = "text-[#A67C8A] font-montserrat text-[10px] md:text-xs font-light" >
-                                        { cat.sub } <
-                                        /span> <
-                                        /div>
-                                    ))
-                                } <
-                                /div> <
-                                /section>
-                            );
-                        };
+<div class="categories">
 
-                        // ── Featured Books ──
-                        const FeaturedBooks = ({ addToCart }) => {
-                            return ( <
-                                    section className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10" >
-                                    <
-                                    div className = "flex items-end justify-between flex-wrap gap-3 mb-6" >
-                                    <
-                                    div >
-                                    <
-                                    span className = "text-[#A67C8A] text-xs font-montserrat tracking-[0.2em] font-medium" >
-                                    FEATURED
-                                    <
-                                    /span> <
-                                    h2 className = "font-playfair text-3xl lg:text-4xl font-bold text-[#1E2A44] flex items-center gap-2" >
-                                    Our Bestselling Books < span className = "text-[#B07C8C]" > 🌸 < /span> <
-                                    /h2> <
-                                    /div> <
-                                    a href = "#"
-                                    className = "text-[#B07C8C] font-montserrat text-sm font-medium hover:underline flex items-center gap-1" >
-                                    View All Books < i className = "fa-solid fa-arrow-right text-xs" > < /i> <
-                                    /a> <
-                                    /div>
+<div class="category">
+<div class="category-icon" style="background:#E8D9D6">🇯🇵</div>
+<strong>Japanese</strong>
+<small>日本語の本</small>
+</div>
 
-                                    <
-                                    div className = "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5" > {
-                                        BOOKS.map((book) => ( <
-                                            div key = { book.id }
-                                            className = "book-card group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300" >
-                                            <
-                                            div className = "relative aspect-[3/4] flex items-center justify-center p-4 rounded-t-2xl"
-                                            style = { { backgroundColor: book.bg } } >
-                                            <
-                                            span className = "text-6xl md:text-7xl opacity-70" > { book.cover } <
-                                            /span> <
-                                            div className = "absolute top-2 right-2 bg-white/70 backdrop-blur-sm rounded-full px-2 py-0.5 text-[10px] font-montserrat text-[#A67C8A] font-medium" >
-                                            { book.subtitle.includes('Beginner') ? 'N5' : 'B1' } <
-                                            /div> <
-                                            /div> <
-                                            div className = "p-3 md:p-4" >
-                                            <
-                                            h3 className = "font-montserrat font-semibold text-sm md:text-base text-[#1E2A44] leading-tight" >
-                                            { book.title } <
-                                            /h3> <
-                                            p className = "text-[#A67C8A] font-montserrat text-[11px] md:text-xs font-light mt-0.5" >
-                                            { book.subtitle } <
-                                            /p> <
-                                            div className = "flex items-center justify-between mt-2.5" >
-                                            <
-                                            span className = "font-montserrat font-semibold text-[#1E2A44] text-sm" >
-                                            { book.price } <
-                                            /span> <
-                                            button onClick = {
-                                                () => addToCart(book) }
-                                            className = "bg-[#B07C8C] hover:bg-[#9a6a7a] text-white text-[11px] font-medium rounded-full px-3 py-1.5 flex items-center gap-1.5 transition" >
-                                            <
-                                            i className = "fa-solid fa-cart-plus text-[10px]" > < /i> Add <
-                                            /button> <
-                                            /div> <
-                                            /div> <
-                                            /div>
-                                        ))
-                                    } <
-                                    /div> <
-                                    /section>
-                                );
-                            };
+<div class="category">
+<div class="category-icon" style="background:#E0D0C8">🇰🇷</div>
+<strong>Korean</strong>
+<small>한국어의 책</small>
+</div>
 
-                            // ── More Than Languages ──
-                            const CultureSection = () => {
-                                return ( <
-                                        section className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12" >
-                                        <
-                                        div className = "wave-divider mb-8" > < /div> <
-                                        div className = "bg-[#F7F3F1] rounded-3xl p-6 md:p-10 lg:p-14 border border-[#E8D9D6]/50 relative overflow-hidden" >
-                                        { /* decorative */ } <
-                                        div className = "absolute -top-12 -right-12 text-8xl text-[#B07C8C]/5" > 🎌 <
-                                        /div> <
-                                        div className = "absolute -bottom-16 -left-8 text-9xl text-[#A67C8A]/5" > 📚 <
-                                        /div> <
-                                        div className = "absolute top-6 right-10 text-3xl text-[#B07C8C]/10" > 🌸 <
-                                        /div>
+<div class="category">
+<div class="category-icon" style="background:#DCCCC4">🇨🇳</div>
+<strong>Chinese</strong>
+<small>中文書籍</small>
+</div>
 
-                                        <
-                                        div className = "relative flex flex-col lg:flex-row items-center gap-8 lg:gap-12" >
-                                        <
-                                        div className = "flex-1" >
-                                        <
-                                        span className = "text-[#A67C8A] text-xs font-montserrat tracking-[0.2em] font-medium" >
-                                        DISCOVER
-                                        <
-                                        /span> <
-                                        h2 className = "font-playfair text-3xl md:text-4xl lg:text-5xl font-bold text-[#1E2A44] mt-1" >
-                                        More Than < span className = "text-[#B07C8C]" > Languages < /span> <
-                                        span className = "text-[#B07C8C]" > ✨ < /span> <
-                                        /h2> <
-                                        p className = "text-[#4A3A4A] font-montserrat text-base mt-3 max-w-md" >
-                                        Anime • K-Drama • Culture • Stationery
-                                        <
-                                        /p> <
-                                        div className = "mt-6 flex flex-wrap gap-3" >
-                                        <
-                                        span className = "inline-flex items-center gap-1.5 bg-white/80 rounded-full px-4 py-1.5 text-sm font-montserrat text-[#1E2A44] shadow-sm" >
-                                        🎎 Anime < /span> <
-                                        span className = "inline-flex items-center gap-1.5 bg-white/80 rounded-full px-4 py-1.5 text-sm font-montserrat text-[#1E2A44] shadow-sm" >
-                                        📺 K-Drama < /span> <
-                                        span className = "inline-flex items-center gap-1.5 bg-white/80 rounded-full px-4 py-1.5 text-sm font-montserrat text-[#1E2A44] shadow-sm" >
-                                        🏯 Culture < /span> <
-                                        span className = "inline-flex items-center gap-1.5 bg-white/80 rounded-full px-4 py-1.5 text-sm font-montserrat text-[#1E2A44] shadow-sm" >
-                                        ✏️ Stationery < /span> <
-                                        /div> <
-                                        button className = "btn-rose mt-6" >
-                                        Explore Now < i className = "fa-solid fa-arrow-right ml-1 text-sm" > < /i> <
-                                        /button> <
-                                        /div>
+<div class="category">
+<div class="category-icon" style="background:#E8DDD8">🌏</div>
+<strong>Other Languages</strong>
+<small>Italian • English • More</small>
+</div>
 
-                                        <
-                                        div className = "flex-1 grid grid-cols-2 gap-3 max-w-md" >
-                                        <
-                                        div className = "bg-[#E8D9D6]/40 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square" >
-                                        <
-                                        span className = "text-4xl" > 📚 < /span> <
-                                        span className = "text-xs font-montserrat text-[#A67C8A] mt-2" > Books < /span> <
-                                        /div> <
-                                        div className = "bg-[#E8D9D6]/40 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square" >
-                                        <
-                                        span className = "text-4xl" > 🐱 < /span> <
-                                        span className = "text-xs font-montserrat text-[#A67C8A] mt-2" > Cozy Reads < /span> <
-                                        /div> <
-                                        div className = "bg-[#E8D9D6]/40 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square" >
-                                        <
-                                        span className = "text-4xl" > 🏮 < /span> <
-                                        span className = "text-xs font-montserrat text-[#A67C8A] mt-2" > Culture < /span> <
-                                        /div> <
-                                        div className = "bg-[#E8D9D6]/40 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square" >
-                                        <
-                                        span className = "text-4xl" > ✨ < /span> <
-                                        span className = "text-xs font-montserrat text-[#A67C8A] mt-2" > Stationery < /span> <
-                                        /div> <
-                                        /div> <
-                                        /div> <
-                                        /div> <
-                                        /section>
-                                    );
-                                };
+<div class="category">
+<div class="category-icon" style="background:#D6C8C0">🎌</div>
+<strong>Anime & Culture</strong>
+<small>Books • Merch • Culture</small>
+</div>
 
-                                // ── Benefits ──
-                                const Benefits = () => {
-                                    return ( <
-                                            section className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-14" >
-                                            <
-                                            div className = "wave-divider mb-8 lg:mb-10" > < /div> <
-                                            div className = "grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8" > {
-                                                BENEFITS.map((b, i) => ( <
-                                                    div key = { i }
-                                                    className = "text-center group" >
-                                                    <
-                                                    div className = "w-12 h-12 mx-auto rounded-full bg-[#E8D9D6]/40 flex items-center justify-center text-[#B07C8C] text-xl mb-3 group-hover:bg-[#B07C8C]/10 transition" >
-                                                    <
-                                                    i className = { b.icon } > < /i> <
-                                                    /div> <
-                                                    h4 className = "font-montserrat font-semibold text-sm text-[#1E2A44]" >
-                                                    { b.title } <
-                                                    /h4> <
-                                                    p className = "text-[#A67C8A] font-montserrat text-xs leading-relaxed mt-1 max-w-[160px] mx-auto" >
-                                                    { b.desc } <
-                                                    /p> <
-                                                    /div>
-                                                ))
-                                            } <
-                                            /div> <
-                                            /section>
-                                        );
-                                    };
+</div>
+</div>
+</section>
 
-                                    // ── Footer ──
-                                    const Footer = () => {
-                                        return ( <
-                                                footer className = "bg-[#1E2A44] text-white/80 mt-8 lg:mt-12 relative overflow-hidden" >
-                                                { /* Cherry blossoms corners */ } <
-                                                div className = "absolute left-0 bottom-0 text-5xl text-[#B07C8C]/10 pointer-events-none" >
-                                                🌸 < /div> <
-                                                div className = "absolute right-0 bottom-0 text-5xl text-[#B07C8C]/10 pointer-events-none transform scale-x-[-1]" >
-                                                🌸 < /div> <
-                                                div className = "absolute left-4 top-8 text-3xl text-[#B07C8C]/8 pointer-events-none" >
-                                                🌸 < /div> <
-                                                div className = "absolute right-4 top-8 text-3xl text-[#B07C8C]/8 pointer-events-none transform scale-x-[-1]" >
-                                                🌸 < /div>
+<section id="books">
+<div class="container">
 
-                                                <
-                                                div className = "relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16" >
-                                                <
-                                                div className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8" >
+<div class="section-head">
+<div>
+<div class="section-label">FEATURED</div>
+<h2 class="section-title">Our Bestselling Books 🌸</h2>
+</div>
 
-                                                { /* Brand */ } <
-                                                div >
-                                                <
-                                                span className = "font-playfair text-2xl font-bold text-white" >
-                                                ASIA < span className = "text-[#B07C8C]" > GATE < /span> <
-                                                /span> <
-                                                p className = "text-white/60 font-montserrat text-sm mt-2 max-w-[220px]" >
-                                                Learn Languages. Explore Cultures.
-                                                <
-                                                /p> <
-                                                div className = "flex gap-3 mt-4" >
-                                                <
-                                                a href = "#"
-                                                className = "text-white/40 hover:text-[#B07C8C] transition text-base" >
-                                                < i className = "fa-brands fa-instagram" > < /i> <
-                                                /a> <
-                                                a href = "#"
-                                                className = "text-white/40 hover:text-[#B07C8C] transition text-base" >
-                                                < i className = "fa-brands fa-tiktok" > < /i> <
-                                                /a> <
-                                                a href = "#"
-                                                className = "text-white/40 hover:text-[#B07C8C] transition text-base" >
-                                                < i className = "fa-brands fa-youtube" > < /i> <
-                                                /a> <
-                                                a href = "#"
-                                                className = "text-white/40 hover:text-[#B07C8C] transition text-base" >
-                                                < i className = "fa-brands fa-x-twitter" > < /i> <
-                                                /a> <
-                                                a href = "#"
-                                                className = "text-white/40 hover:text-[#B07C8C] transition text-base" >
-                                                < i className = "fa-brands fa-pinterest" > < /i> <
-                                                /a> <
-                                                /div> <
-                                                /div>
+<a class="view-all" href="#books">
+View All Books <i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
 
-                                                { /* Quick Links */ } <
-                                                div >
-                                                <
-                                                h5 className = "font-montserrat font-semibold text-white text-sm uppercase tracking-wider mb-4" >
-                                                Quick Links
-                                                <
-                                                /h5> <
-                                                ul className = "space-y-2.5 font-montserrat text-sm" >
-                                                <
-                                                li > < a href = "#"
-                                                className = "hover:text-[#B07C8C] transition" > Home < /a></li >
-                                                <
-                                                li > < a href = "#"
-                                                className = "hover:text-[#B07C8C] transition" > Books < /a></li >
-                                                <
-                                                li > < a href = "#"
-                                                className = "hover:text-[#B07C8C] transition" > Languages < /a></li >
-                                                <
-                                                li > < a href = "#"
-                                                className = "hover:text-[#B07C8C] transition" > Anime & Culture < /a></li >
-                                                <
-                                                li > < a href = "#"
-                                                className = "hover:text-[#B07C8C] transition" > About < /a></li >
-                                                <
-                                                li > < a href = "#"
-                                                className = "hover:text-[#B07C8C] transition" > Contact < /a></li >
-                                                <
-                                                /ul> <
-                                                /div>
+<div class="books" id="bookList"></div>
 
-                                                { /* Newsletter */ } <
-                                                div className = "md:col-span-1 lg:col-span-2" >
-                                                <
-                                                h5 className = "font-montserrat font-semibold text-white text-sm uppercase tracking-wider mb-4" >
-                                                Join Our Newsletter
-                                                <
-                                                /h5> <
-                                                p className = "text-white/60 font-montserrat text-sm mb-4 max-w-sm" >
-                                                Get the latest books, offers and news.
-                                                <
-                                                /p> <
-                                                div className = "flex flex-col sm:flex-row gap-3 max-w-md" >
-                                                <
-                                                input type = "email"
-                                                placeholder = "Your email"
-                                                className = "flex-1 bg-white/10 border border-white/10 rounded-full px-5 py-2.5 text-sm font-montserrat text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#B07C8C]/50" /
-                                                >
-                                                <
-                                                button className = "btn-rose px-6 py-2.5 text-sm whitespace-nowrap" >
-                                                Subscribe
-                                                <
-                                                /button> <
-                                                /div> <
-                                                /div> <
-                                                /div>
+</div>
+</section>
 
-                                                <
-                                                div className = "border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs font-montserrat text-white/40" >
-                                                <
-                                                span > © 2026 ASIA GATE LANGUAGE CENTER. All rights reserved. < /span> <
-                                                span > Designed with < span className = "text-[#B07C8C]" > ♡ < /span> and cherry
-                                                    blossoms < /span> <
-                                                    /div> <
-                                                    /div> <
-                                                    /footer>
-                                                );
-                                            };
+<section id="culture">
+<div class="container">
 
-                                            // ── Shopping Cart UI ──
-                                            const CartDrawer = ({ isOpen, setOpen, cart, removeFromCart }) => {
-                                                const total = cart.reduce((sum, item) => sum + parseFloat(item.price.replace('EGP ',
-                                                '')), 0);
+<div class="divider"></div>
 
-                                                if (!isOpen) return null;
+<div class="culture">
 
-                                                return ( <
-                                                        div className = "fixed inset-0 z-[60] flex justify-end" >
-                                                        <
-                                                        div className = "absolute inset-0 bg-black/20 backdrop-blur-sm"
-                                                        onClick = {
-                                                            () => setOpen(false) } >
-                                                        < /div> <
-                                                        div className = "relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-slide-right" >
-                                                        <
-                                                        div className = "flex items-center justify-between p-5 border-b border-[#E8D9D6]" >
-                                                        <
-                                                        h3 className = "font-playfair text-xl font-bold text-[#1E2A44]" >
-                                                        Your Cart < span className = "text-[#B07C8C]" > 🛍️ < /span> <
-                                                        /h3> <
-                                                        button onClick = {
-                                                            () => setOpen(false) }
-                                                        className = "text-[#A67C8A] hover:text-[#1E2A44] text-xl" >
-                                                        < i className = "fa-solid fa-xmark" > < /i> <
-                                                        /button> <
-                                                        /div>
+<div class="culture-text">
 
-                                                        <
-                                                        div className = "flex-1 overflow-y-auto p-5 space-y-4" > {
-                                                            cart.length === 0 ? ( <
-                                                                div className = "flex flex-col items-center justify-center h-full text-[#A67C8A]" >
-                                                                <
-                                                                span className = "text-5xl mb-4" > 📭 < /span> <
-                                                                p className = "font-montserrat" > Your cart is empty. < /p> <
-                                                                p className = "text-sm font-montserrat" > Start exploring our books! <
-                                                                /p> <
-                                                                /div>
-                                                            ) : (
-                                                                cart.map((item, idx) => ( <
-                                                                    div key = { idx }
-                                                                    className = "flex items-center gap-4 bg-[#F7F3F1] rounded-xl p-3" >
-                                                                    <
-                                                                    span className = "text-3xl" > { item.cover } < /span> <
-                                                                    div className = "flex-1" >
-                                                                    <
-                                                                    h4 className = "font-montserrat font-semibold text-sm text-[#1E2A44]" >
-                                                                    { item.title } <
-                                                                    /h4> <
-                                                                    p className = "text-xs text-[#A67C8A]" > { item.subtitle } <
-                                                                    /p> <
-                                                                    span className = "font-montserrat font-medium text-sm text-[#1E2A44]" >
-                                                                    { item.price } <
-                                                                    /span> <
-                                                                    /div> <
-                                                                    button onClick = {
-                                                                        () => removeFromCart(item.id) }
-                                                                    className = "text-[#B07C8C] hover:text-[#9a6a7a] text-sm" >
-                                                                    < i className = "fa-regular fa-trash-can" > < /i> <
-                                                                    /button> <
-                                                                    /div>
-                                                                ))
-                                                            )
-                                                        } <
-                                                        /div>
+<div class="section-label">DISCOVER</div>
 
-                                                        <
-                                                        div className = "border-t border-[#E8D9D6] p-5 bg-white/90" >
-                                                        <
-                                                        div className = "flex justify-between font-montserrat text-[#1E2A44] mb-3" >
-                                                        <
-                                                        span className = "font-medium" > Subtotal < /span> <
-                                                        span className = "font-bold" > EGP { total.toFixed(0) } < /span> <
-                                                        /div> <
-                                                        button className = "btn-rose w-full justify-center text-sm py-3" >
-                                                        Checkout < i className = "fa-solid fa-arrow-right ml-2" > < /i> <
-                                                        /button> <
-                                                        /div> <
-                                                        /div> <
-                                                        /div>
-                                                    );
-                                                };
+<h2>
+More Than <span>Languages</span> ✨
+</h2>
 
-                                                // ─── MAIN APP ────────────────────────────────────────────
-                                                const App = () => {
-                                                    const [cart, setCart] = useState([]);
-                                                    const [cartOpen, setCartOpen] = useState(false);
+<p>
+Anime • K-Drama • Culture • Stationery
+</p>
 
-                                                    const addToCart = (book) => {
-                                                        setCart(prev => {
-                                                            // avoid duplicates by id
-                                                            if (prev.find(b => b.id === book.id)) return prev;
-                                                            return [...prev, book];
-                                                        });
-                                                    };
+<div class="tags">
+<div class="tag">🎎 Anime</div>
+<div class="tag">📺 K-Drama</div>
+<div class="tag">🏯 Culture</div>
+<div class="tag">✏️ Stationery</div>
+</div>
 
-                                                    const removeFromCart = (id) => {
-                                                        setCart(prev => prev.filter(b => b.id !== id));
-                                                    };
+<button class="btn" style="margin-top:22px">
+Explore Now <i class="fa-solid fa-arrow-right"></i>
+</button>
 
-                                                    return ( <
-                                                            div className = "min-h-screen bg-[#F7F3F1]" >
-                                                            <
-                                                            Header cartCount = { cart.length }
-                                                            setCartOpen = { setCartOpen }
-                                                            /> <
-                                                            main > <
-                                                            Hero / > <
-                                                            CategoryNav / > <
-                                                            FeaturedBooks addToCart = { addToCart }
-                                                            /> <
-                                                            CultureSection / > <
-                                                            Benefits / > <
-                                                            /main> <
-                                                            Footer / > <
-                                                            CartDrawer isOpen = { cartOpen }
-                                                            setOpen = { setCartOpen }
-                                                            cart = { cart }
-                                                            removeFromCart = { removeFromCart }
-                                                            /> <
-                                                            /div>
-                                                        );
-                                                    };
+</div>
 
-                                                    // ─── RENDER ────────────────────────────────────────────
-                                                    const root = ReactDOM.createRoot(document.getElementById('root'));
-                                                    root.render( < App / > );
-    </script>
+<div class="culture-grid">
+
+<div class="culture-box">
+📚
+<span>Books</span>
+</div>
+
+<div class="culture-box">
+🐱
+<span>Cozy Reads</span>
+</div>
+
+<div class="culture-box">
+🏮
+<span>Culture</span>
+</div>
+
+<div class="culture-box">
+✨
+<span>Stationery</span>
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+
+<div class="divider"></div>
+
+<div class="benefits">
+
+<div class="benefit">
+<div class="benefit-icon">
+<i class="fa-solid fa-truck-fast"></i>
+</div>
+<h4>Worldwide Shipping</h4>
+<p>We deliver to your doorstep wherever you are.</p>
+</div>
+
+<div class="benefit">
+<div class="benefit-icon">
+<i class="fa-solid fa-lock"></i>
+</div>
+<h4>Secure Payment</h4>
+<p>Your information is always safe with us.</p>
+</div>
+
+<div class="benefit">
+<div class="benefit-icon">
+<i class="fa-solid fa-headset"></i>
+</div>
+<h4>Language Support</h4>
+<p>Need help? We're here for you.</p>
+</div>
+
+<div class="benefit">
+<div class="benefit-icon">
+<i class="fa-solid fa-users"></i>
+</div>
+<h4>More Than Just Books</h4>
+<p>Join our community of learners and fans!</p>
+</div>
+
+</div>
+</div>
+</section>
+
+</main>
+
+<footer id="contact">
+
+<div class="container">
+
+<div class="footer-grid">
+
+<div>
+<div class="footer-logo">
+ASIA <span>GATE</span>
+</div>
+
+<p>
+Learn Languages. Explore Cultures.
+</p>
+
+<div class="socials">
+<a href="#"><i class="fa-brands fa-instagram"></i></a>
+<a href="#"><i class="fa-brands fa-tiktok"></i></a>
+<a href="#"><i class="fa-brands fa-youtube"></i></a>
+<a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+<a href="#"><i class="fa-brands fa-pinterest"></i></a>
+</div>
+</div>
+
+<div>
+<h4>Quick Links</h4>
+
+<div class="footer-links">
+<a href="#home">Home</a>
+<a href="#books">Books</a>
+<a href="#languages">Languages</a>
+<a href="#culture">Anime & Culture</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</div>
+</div>
+
+<div>
+<h4>Join Our Newsletter</h4>
+
+<p>
+Get the latest books, offers and news.
+</p>
+
+<div class="newsletter">
+<input type="email" placeholder="Your email">
+<button onclick="subscribe()">Subscribe</button>
+</div>
+</div>
+
+</div>
+
+<div class="copyright">
+© 2026 ASIA GATE LANGUAGE CENTER. All rights reserved.
+</div>
+
+</div>
+</footer>
+
+<div class="cart" id="cart">
+
+<div class="cart-overlay" onclick="closeCart()"></div>
+
+<div class="cart-panel">
+
+<div class="cart-head">
+<h2>Your Cart 🛍️</h2>
+
+<button class="close" onclick="closeCart()">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+
+<div class="cart-items" id="cartItems"></div>
+
+<div class="cart-total">
+
+<div class="total-row">
+<span>Subtotal</span>
+<strong id="cartTotal">EGP 0</strong>
+</div>
+
+<button class="btn checkout" onclick="checkout()">
+Checkout <i class="fa-solid fa-arrow-right"></i>
+</button>
+
+</div>
+
+</div>
+</div>
+
+<script>
+const books=[
+{
+id:1,
+title:'Minna no Nihongo',
+subtitle:'Japanese – Beginner',
+price:310,
+cover:'📘',
+bg:'#E8D9D6',
+level:'N5'
+},
+{
+id:2,
+title:'Korean Grammar in Use',
+subtitle:'Korean – Beginner',
+price:300,
+cover:'📗',
+bg:'#D9C8C0',
+level:'TOPIK 1'
+},
+{
+id:3,
+title:'HSK Standard Course 1',
+subtitle:'Chinese – Beginner',
+price:300,
+cover:'📕',
+bg:'#E0D0C8',
+level:'HSK 1'
+},
+{
+id:4,
+title:'K-Drama Korean Reader',
+subtitle:'Intermediate',
+price:280,
+cover:'📙',
+bg:'#DCCCC4',
+level:'B1'
+},
+{
+id:5,
+title:'Japanese Vocabulary Book',
+subtitle:'JLPT N5-N3',
+price:250,
+cover:'📓',
+bg:'#E8DDD8',
+level:'N5-N3'
+},
+{
+id:6,
+title:'Anime Guide Book',
+subtitle:'Culture & Language',
+price:290,
+cover:'📖',
+bg:'#D6C8C0',
+level:'GUIDE'
+}
+];
+
+let cart=[];
+
+function renderBooks(){
+
+const list=document.getElementById('bookList');
+
+list.innerHTML=books.map(book=>`
+
+<div class="book">
+
+<div class="cover" style="background:${book.bg}">
+<span>${book.cover}</span>
+<span class="level">${book.level}</span>
+</div>
+
+<div class="book-info">
+
+<h3>${book.title}</h3>
+
+<p>${book.subtitle}</p>
+
+<div class="book-bottom">
+
+<span class="price">EGP ${book.price}</span>
+
+<button class="add" onclick="addToCart(${book.id})">
+<i class="fa-solid fa-cart-plus"></i> Add
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`).join('');
+
+}
+
+function addToCart(id){
+
+const book=books.find(b=>b.id===id);
+
+if(!cart.some(item=>item.id===id)){
+cart.push(book);
+}
+
+updateCart();
+
+}
+
+function removeFromCart(id){
+
+cart=cart.filter(item=>item.id!==id);
+
+updateCart();
+
+}
+
+function updateCart(){
+
+document.getElementById('cartCount').textContent=cart.length;
+
+document.getElementById('cartCount').style.display=
+cart.length ? 'flex' : 'none';
+
+const items=document.getElementById('cartItems');
+
+if(cart.length===0){
+
+items.innerHTML=`
+<div class="empty">
+<div>📭</div>
+<p>Your cart is empty.</p>
+<small>Start exploring our books!</small>
+</div>
+`;
+
+}else{
+
+items.innerHTML=cart.map(item=>`
+
+<div class="cart-item">
+
+<div class="emoji">${item.cover}</div>
+
+<div class="cart-item-info">
+<strong>${item.title}</strong>
+<small>${item.subtitle}</small>
+</div>
+
+<strong>EGP ${item.price}</strong>
+
+<button class="remove" onclick="removeFromCart(${item.id})">
+<i class="fa-regular fa-trash-can"></i>
+</button>
+
+</div>
+
+`).join('');
+
+}
+
+const total=cart.reduce((sum,item)=>sum+item.price,0);
+
+document.getElementById('cartTotal').textContent='EGP '+total;
+
+}
+
+function openCart(){
+
+document.getElementById('cart').classList.add('active');
+
+}
+
+function closeCart(){
+
+document.getElementById('cart').classList.remove('active');
+
+}
+
+function toggleMenu(){
+
+const menu=document.getElementById('mobileMenu');
+
+menu.style.display=
+menu.style.display==='none' ? 'block' : 'none';
+
+}
+
+function subscribe(){
+
+alert('Thank you for subscribing to ASIA GATE 🌸');
+
+}
+
+function checkout(){
+
+if(cart.length===0){
+
+alert('Your cart is empty.');
+
+return;
+
+}
+
+alert('Checkout will be available soon 🌸');
+
+}
+
+renderBooks();
+updateCart();
+</script>
 
 </body>
-  </html>
+    </html>
